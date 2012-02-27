@@ -387,7 +387,7 @@ class UploadBehavior extends ModelBehavior {
     }
 
     if (!empty($value['tmp_name'])) {
-      $finfo = new finfo(FILEINFO_MIME_TYPE);
+      $finfo = class_exists('finfo') ? new finfo(FILEINFO_MIME_TYPE) : false;
       if ($finfo) {
         $mimetype = $finfo->file($value['tmp_name']);
       } else {
