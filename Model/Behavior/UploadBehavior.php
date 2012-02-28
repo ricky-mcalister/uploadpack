@@ -120,6 +120,11 @@ class UploadBehavior extends ModelBehavior {
     $basename = $filename.'.'.$extension;
 
     $settings = $this->_interpolate($model, $field, $basename, 'original');
+    
+    // ensure remote file flag is passed into settings
+    if(isset($model->data[$model->name][$field]['remote']) && $model->data[$model->name][$field]['remote']) {
+      $settings = array_merge($settings, array('remote' => 1));
+    }
 
     if (!$this->_isWritable($settings['path'])) {
       throw new DirectoryException('Directory is not writable: ' . $dir);
